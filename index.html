@@ -1,11 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Football Data</title>
 </head>
 <body>
-  <h1>เว็บขึ้นแล้ว 🎉</h1>
+
+  <h1>Football Players ✅</h1>
+
+  <div id="output"></div>
+
+  <!-- โหลดข้อมูล Premier League -->
+  <script src="data/premier-league.js"></script>
+
+  <!-- แสดงผลข้อมูล -->
+  <script>
+    const output = document.getElementById("output");
+
+    if (window.premierLeaguePlayers) {
+      window.premierLeaguePlayers.forEach(player => {
+        const p = document.createElement("p");
+        p.textContent = `${player.name} - ${player.team} (${player.position})`;
+        output.appendChild(p);
+      });
+    } else {
+      output.textContent = "No data loaded ❌";
+    }
+  </script>
+
 </body>
 </html>
-
