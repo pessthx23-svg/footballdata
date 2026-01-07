@@ -1,4 +1,4 @@
-const ligue1 = [
+window.ligue1 = [
   // Paris Saint-Germain,
   { name:"Ousmane Dembélé", league:"Ligue 1", team:"Paris Saint-Germain", position:"Winger", age:27, height:"178 cm", weight:"67 kg" },
   { name:"Achraf Hakimi", league:"Ligue 1", team:"Paris Saint-Germain", position:"Defender", age:26, height:"181 cm", weight:"73 kg" },
