@@ -1,8 +1,23 @@
 window.bundesligaPlayers = [
 
   // Bayern Munich
-  { name:"Harry Kane", league:"Bundesliga", team:"Bayern Munich", position:"Forward", age:31, height:"188 cm", weight:"86 kg" },
-  { name:"Jamal Musiala", league:"Bundesliga", team:"Bayern Munich", position:"Attacking Midfielder", age:22, height:"184 cm", weight:"72 kg" },
+  { name:"Harry Kane", 
+   league:"Bundesliga", 
+   team:"Bayern Munich", 
+   position:"Forward", 
+   age:31, 
+   height:"188 cm", 
+   weight:"86 kg" 
+  },
+  { name:"Jamal Musiala", 
+   league:"Bundesliga", 
+   team:"Bayern Munich", 
+   position:"Attacking 
+     Midfielder", 
+   age:22, 
+   height:"184 cm", 
+   weight:"72 kg" 
+  },
   { name:"Joshua Kimmich", league:"Bundesliga", team:"Bayern Munich", position:"Midfielder", age:30, height:"176 cm", weight:"75 kg" },
   { name:"Leroy Sané", league:"Bundesliga", team:"Bayern Munich", position:"Winger", age:29, height:"183 cm", weight:"75 kg" },
   { name:"Thomas Müller", league:"Bundesliga", team:"Bayern Munich", position:"Forward", age:35, height:"186 cm", weight:"75 kg" },
