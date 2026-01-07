@@ -1,4 +1,4 @@
-const laLiga = [
+window.laLiga = [
   // Real Madrid                                                                                                                                                                                             
   {name:"Kylian Mbappé", league:"La Liga", team:"Real Madrid", position:"Forward", age:26, height:"178 cm", weight:"73 kg" },
   { name:"Kylian Mbappé", league:"La Liga", team:"Real Madrid", position:"Forward", age:26, height:"178 cm", weight:"73 kg" },
