@@ -1,5 +1,6 @@
 window.laLigaPlayers = [
-  // Real Madrid
+  // Real Madrid  
+  { name: "Kylian Mbappé", team: "Real Madrid", position: "Forward", age: 26, league: "La Liga" },
   { name: "Jude Bellingham", team: "Real Madrid", position: "Midfielder", age: 21, league: "La Liga" },
   { name: "Vinicius Junior", team: "Real Madrid", position: "Winger", age: 24, league: "La Liga" },
   { name: "Rodrygo", team: "Real Madrid", position: "Winger", age: 24, league: "La Liga" },
