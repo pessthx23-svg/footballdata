@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Football Players Database</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
       padding: 20px;
+      background: #f4f6f8;
     }
 
     h1 {
@@ -18,10 +17,8 @@
 
     input {
       padding: 10px;
-      width: 100%;
-      max-width: 400px;
-      margin: 20px auto;
-      display: block;
+      width: 300px;
+      margin-bottom: 15px;
       font-size: 16px;
     }
 
@@ -29,12 +26,11 @@
       width: 100%;
       border-collapse: collapse;
       background: white;
-      margin-top: 20px;
     }
 
     th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
+      border: 1px solid #ddd;
+      padding: 10px;
       text-align: left;
     }
 
@@ -43,31 +39,27 @@
       color: white;
     }
 
-    tr:hover {
-      background: #f1f1f1;
-    }
-
-    @media (max-width: 600px) {
-      th, td {
-        font-size: 14px;
-      }
+    tr:nth-child(even) {
+      background: #f2f2f2;
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Premier League Players</h1>
+  <h1>⚽ Football Players Database</h1>
 
   <input
     type="text"
     id="search"
     placeholder="Search player name..."
-  />
+  >
 
   <table>
     <thead>
       <tr>
         <th>Name</th>
+        <th>League</th>
         <th>Team</th>
         <th>Position</th>
         <th>Age</th>
@@ -76,35 +68,48 @@
     <tbody id="playerTable"></tbody>
   </table>
 
-  <!-- โหลดข้อมูลจากไฟล์ JS -->
+  <!-- โหลดข้อมูลนักเตะ -->
   <script src="data/premier-league.js"></script>
+  <script src="data/la-liga.js"></script>
+  <script src="data/serie-a.js"></script>
+  <script src="data/bundesliga.js"></script>
+  <script src="data/ligue-1.js"></script>
 
   <script>
     const tableBody = document.getElementById("playerTable");
     const searchInput = document.getElementById("search");
 
+    // รวมทุกลีก
+    const allPlayers = [
+      ...window.premierLeaguePlayers,
+      ...window.laLigaPlayers,
+      ...window.serieAPlayers,
+      ...window.bundesligaPlayers,
+      ...window.ligue1Players
+    ];
+
     function renderTable(players) {
       tableBody.innerHTML = "";
-      players.forEach(player => {
-        const row = `
+      players.forEach(p => {
+        tableBody.innerHTML += `
           <tr>
-            <td>${player.name}</td>
-            <td>${player.team}</td>
-            <td>${player.position}</td>
-            <td>${player.age}</td>
+            <td>${p.name}</td>
+            <td>${p.league}</td>
+            <td>${p.team}</td>
+            <td>${p.position}</td>
+            <td>${p.age}</td>
           </tr>
         `;
-        tableBody.innerHTML += row;
       });
     }
 
-    // แสดงทั้งหมดตอนแรก
-    renderTable(window.premierLeaguePlayers);
+    // แสดงทั้งหมดตอนเปิดเว็บ
+    renderTable(allPlayers);
 
     // ค้นหาชื่อ
     searchInput.addEventListener("input", () => {
       const keyword = searchInput.value.toLowerCase();
-      const filtered = window.premierLeaguePlayers.filter(p =>
+      const filtered = allPlayers.filter(p =>
         p.name.toLowerCase().includes(keyword)
       );
       renderTable(filtered);
@@ -113,20 +118,4 @@
 
 </body>
 </html>
-
-<script src="data/premier-league.js"></script>
-<script src="data/la-liga.js"></script>
-<script src="data/bundesliga.js"></script>
-<script src="data/serie-a.js"></script>
-<script src="data/ligue-1.js"></script>
-
-<script>
-  const allPlayers = [
-    ...window.premierLeaguePlayers,
-    ...window.laLigaPlayers,
-    ...window.bundesligaPlayers,
-    ...window.serieAPlayers,
-    ...window.ligue1Players
-  ];
-</script>
 
