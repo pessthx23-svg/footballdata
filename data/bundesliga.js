@@ -1,7 +1,8 @@
 window.bundesligaPlayers = [
 
   // Bayern Munich
-  { name:"Harry Kane", 
+  {
+   name:"Harry Kane", 
    league:"Bundesliga", 
    team:"Bayern Munich", 
    position:"Forward", 
@@ -9,11 +10,11 @@ window.bundesligaPlayers = [
    height:"188 cm", 
    weight:"86 kg" 
   },
-  { name:"Jamal Musiala", 
+  {
+   name:"Jamal Musiala", 
    league:"Bundesliga", 
    team:"Bayern Munich", 
-   position:"Attacking 
-     Midfielder", 
+   position:"Midfielder", 
    age:22, 
    height:"184 cm", 
    weight:"72 kg" 
