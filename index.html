@@ -1,80 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Football Players Database</title>
+<meta charset="UTF-8" />
+<title>Football Players Database</title>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Inter', Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    h1 {
-      text-align: center;
-    }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+  transition: 0.3s;
+}
 
-    .controls {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+body.dark {
+  background: #121212;
+  color: #eee;
+}
 
-    input, select {
-      padding: 10px;
-      font-size: 16px;
-      margin: 5px;
-    }
+h1 {
+  text-align: center;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-    }
+.controls {
+  text-align: center;
+  margin-bottom: 15px;
+}
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
+input, select, button {
+  padding: 10px;
+  font-size: 15px;
+  margin: 5px;
+}
 
-    th {
-      background: #222;
-      color: white;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
 
-    tr:nth-child(even) {
-      background: #f2f2f2;
-    }
+body.dark table {
+  background: #1e1e1e;
+}
 
-    /* 🎨 League colors */
-    .league-Premier\ League { border-left: 6px solid #3f1052; }
-    .league-La\ Liga { border-left: 6px solid #ee8707; }
-    .league-Serie\ A { border-left: 6px solid #0057b8; }
-    .league-Bundesliga { border-left: 6px solid #d20515; }
-    .league-Ligue\ 1 { border-left: 6px solid #091c3e; }
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
 
-    /* ⭐ Star players */
-    .star {
-      background: linear-gradient(90deg, #fff3cd, #ffffff);
-      font-weight: 700;
-    }
+body.dark th, body.dark td {
+  border-color: #333;
+}
 
-    .star td:first-child::before {
-      content: "⭐ ";
-    }
-  </style>
+th {
+  background: #222;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+body.dark tr:nth-child(even) {
+  background: #222;
+}
+
+/* 🎨 League Colors */
+.league-premier { border-left: 6px solid #37003c; }
+.league-laliga { border-left: 6px solid #e10600; }
+.league-seriea { border-left: 6px solid #008fd7; }
+.league-bundesliga { border-left: 6px solid #d20515; }
+.league-ligue1 { border-left: 6px solid #00bfff; }
+
+/* ⭐ Star Players */
+.star {
+  background: #fff3cd !important;
+  font-weight: 700;
+}
+
+body.dark .star {
+  background: #3a2f00 !important;
+}
+
+#count {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Football Players Database</h1>
-<p id="count" style="text-align:center; font-weight:bold;"></p>
+<h1>⚽ Football Players Database</h1>
+
+<p id="count"></p>
 
 <div class="controls">
-  <button id="toggleDark">🌙 Dark Mode</button>
   <input type="text" id="search" placeholder="Search player name..." />
 
   <select id="leagueFilter">
@@ -85,19 +113,21 @@
     <option value="Bundesliga">Bundesliga</option>
     <option value="Ligue 1">Ligue 1</option>
   </select>
+
+  <button id="darkToggle">🌙 Dark Mode</button>
 </div>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Team</th>
-      <th>Position</th>
-      <th>Age</th>
-      <th>League</th>
-    </tr>
-  </thead>
-  <tbody id="playerTable"></tbody>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Team</th>
+  <th>Position</th>
+  <th>Age</th>
+  <th>League</th>
+</tr>
+</thead>
+<tbody id="playerTable"></tbody>
 </table>
 
 <!-- โหลดข้อมูลทุกลีก -->
@@ -108,69 +138,89 @@
 <script src="data/ligue-1.js"></script>
 
 <script>
-  const tableBody = document.getElementById("playerTable");
-  const searchInput = document.getElementById("search");
-  const leagueFilter = document.getElementById("leagueFilter");
-  const countText = document.getElementById("count");
+const tableBody = document.getElementById("playerTable");
+const searchInput = document.getElementById("search");
+const leagueFilter = document.getElementById("leagueFilter");
+const countText = document.getElementById("count");
+const darkToggle = document.getElementById("darkToggle");
 
-  // ⭐ นักเตะดัง
-  const starPlayers = [
-    "Erling Haaland",
-    "Kylian Mbappé",
-    "Lionel Messi",
-    "Cristiano Ronaldo",
-    "Kevin De Bruyne",
-    "Mohamed Salah",
-    "Harry Kane",
-    "Jude Bellingham"
-  ];
+/* ⭐ รายชื่อนักเตะดัง */
+const starPlayers = [
+  "Erling Haaland",
+  "Kylian Mbappé",
+  "Kevin De Bruyne",
+  "Jude Bellingham",
+  "Harry Kane",
+  "Vinícius Júnior",
+  "Lautaro Martínez",
+  "Mohamed Salah"
+];
 
-  // รวมข้อมูลทั้งหมด
-  const allPlayers = [
-    ...(window.premierLeaguePlayers || []),
-    ...(window.laLigaPlayers || []),
-    ...(window.serieAPlayers || []),
-    ...(window.bundesligaPlayers || []),
-    ...(window.ligue1Players || [])
-  ];
+/* ✅ รวมทุกลีก */
+const allPlayers = [
+  ...(window.premierLeaguePlayers || []),
+  ...(window.laLigaPlayers || []),
+  ...(window.serieAPlayers || []),
+  ...(window.bundesligaPlayers || []),
+  ...(window.ligue1Players || [])
+];
 
-  function renderTable(players) {
-    tableBody.innerHTML = "";
-
-    players.forEach(p => {
-      const isStar = starPlayers.includes(p.name);
-
-      tableBody.innerHTML += `
-        <tr class="league-${p.league.replace(" ", "\\ ")} ${isStar ? "star" : ""}">
-          <td>${p.name}</td>
-          <td>${p.team}</td>
-          <td>${p.position}</td>
-          <td>${p.age}</td>
-          <td>${p.league}</td>
-        </tr>
-      `;
-    });
-
-    countText.innerText = `Total players: ${players.length}`;
+/* 🎨 map ลีก → class */
+function getLeagueClass(league) {
+  switch (league) {
+    case "Premier League": return "league-premier";
+    case "La Liga": return "league-laliga";
+    case "Serie A": return "league-seriea";
+    case "Bundesliga": return "league-bundesliga";
+    case "Ligue 1": return "league-ligue1";
+    default: return "";
   }
+}
 
-  function applyFilters() {
-    const keyword = searchInput.value.toLowerCase();
-    const league = leagueFilter.value;
+function renderTable(players) {
+  tableBody.innerHTML = "";
 
-    const filtered = allPlayers.filter(p => {
-      const matchName = p.name.toLowerCase().includes(keyword);
-      const matchLeague = league === "All" || p.league === league;
-      return matchName && matchLeague;
-    });
+  players.forEach(p => {
+    const leagueClass = getLeagueClass(p.league);
+    const isStar = starPlayers.includes(p.name) ? "star" : "";
 
-    renderTable(filtered);
-  }
+    tableBody.innerHTML += `
+      <tr class="${leagueClass} ${isStar}">
+        <td>${p.name}</td>
+        <td>${p.team}</td>
+        <td>${p.position}</td>
+        <td>${p.age}</td>
+        <td>${p.league}</td>
+      </tr>
+    `;
+  });
 
-  searchInput.addEventListener("input", applyFilters);
-  leagueFilter.addEventListener("change", applyFilters);
+  countText.innerText = `Total players: ${players.length}`;
+}
 
-  renderTable(allPlayers);
+function applyFilters() {
+  const keyword = searchInput.value.toLowerCase();
+  const league = leagueFilter.value;
+
+  const filtered = allPlayers.filter(p => {
+    const matchName = p.name.toLowerCase().includes(keyword);
+    const matchLeague = league === "All" || p.league === league;
+    return matchName && matchLeague;
+  });
+
+  renderTable(filtered);
+}
+
+/* Events */
+searchInput.addEventListener("input", applyFilters);
+leagueFilter.addEventListener("change", applyFilters);
+
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
+
+/* เริ่มต้น */
+renderTable(allPlayers);
 </script>
 
 </body>
