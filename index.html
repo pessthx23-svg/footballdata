@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Football Players Database</title>
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
       background: #f4f6f8;
+      padding: 20px;
     }
 
     h1 {
@@ -44,77 +44,57 @@
     }
   </style>
 </head>
-
 <body>
 
-  <h1>⚽ Football Players Database</h1>
+<h1>Football Players Database</h1>
 
-  <input
-    type="text"
-    id="search"
-    placeholder="Search player name..."
-  >
+<input type="text" id="search" placeholder="Search player name..." />
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>League</th>
-        <th>Team</th>
-        <th>Position</th>
-        <th>Age</th>
-      </tr>
-    </thead>
-    <tbody id="playerTable"></tbody>
-  </table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>Position</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody id="playerTable"></tbody>
+</table>
 
-  <!-- โหลดข้อมูลนักเตะ -->
-  <script src="data/premier-league.js"></script>
-  <script src="data/la-liga.js"></script>
-  <script src="data/serie-a.js"></script>
-  <script src="data/bundesliga.js"></script>
-  <script src="data/ligue-1.js"></script>
+<!-- โหลดข้อมูล -->
+<script src="data/premier-league.js"></script>
 
-  <script>
-    const tableBody = document.getElementById("playerTable");
-    const searchInput = document.getElementById("search");
+<script>
+  const tableBody = document.getElementById("playerTable");
+  const searchInput = document.getElementById("search");
 
-    // รวมทุกลีก
-    const allPlayers = [
-      ...window.premierLeaguePlayers,
-      ...window.laLigaPlayers,
-      ...window.serieAPlayers,
-      ...window.bundesligaPlayers,
-      ...window.ligue1Players
-    ];
-
-    function renderTable(players) {
-      tableBody.innerHTML = "";
-      players.forEach(p => {
-        tableBody.innerHTML += `
-          <tr>
-            <td>${p.name}</td>
-            <td>${p.league}</td>
-            <td>${p.team}</td>
-            <td>${p.position}</td>
-            <td>${p.age}</td>
-          </tr>
-        `;
-      });
-    }
-
-    // แสดงทั้งหมดตอนเปิดเว็บ
-    renderTable(allPlayers);
-
-    // ค้นหาชื่อ
-    searchInput.addEventListener("input", () => {
-      const keyword = searchInput.value.toLowerCase();
-      const filtered = allPlayers.filter(p =>
-        p.name.toLowerCase().includes(keyword)
-      );
-      renderTable(filtered);
+  function renderTable(players) {
+    tableBody.innerHTML = "";
+    players.forEach(p => {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.team}</td>
+          <td>${p.position}</td>
+          <td>${p.age}</td>
+        </tr>
+      `;
     });
-  </script>
+  }
+
+  // แสดงข้อมูลเริ่มต้น
+  renderTable(window.premierLeaguePlayers);
+
+  // ค้นหา
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase();
+    const filtered = window.premierLeaguePlayers.filter(p =>
+      p.name.toLowerCase().includes(keyword)
+    );
+    renderTable(filtered);
+  });
+</script>
 
 </body>
 </html>
