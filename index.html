@@ -5,6 +5,17 @@
   <title>Football Players Database</title>
 
   <style>
+    select {
+  padding: 10px;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
@@ -47,8 +58,22 @@
 <body>
 
 <h1>Football Players Database</h1>
+  
+<p id="count" style="text-align:center; font-weight:bold;"></p>
 
-<input type="text" id="search" placeholder="Search player name..." />
+  <div class="controls">
+  <input type="text" id="search" placeholder="Search player name..." />
+
+  <select id="leagueFilter">
+    <option value="All">All Leagues</option>
+    <option value="Premier League">Premier League</option>
+    <option value="La Liga">La Liga</option>
+    <option value="Serie A">Serie A</option>
+    <option value="Bundesliga">Bundesliga</option>
+    <option value="Ligue 1">Ligue 1</option>
+  </select>
+</div>
+
 
 <table>
   <thead>
@@ -103,13 +128,58 @@
 
   // ค้นหา
   searchInput.addEventListener("input", () => {
-    const keyword = searchInput.value.toLowerCase();
-    const filtered = allPlayers.filter(p =>
-      p.name.toLowerCase().includes(keyword)
-    );
-    renderTable(filtered);
-  });
-</script>
+    <select id="leagueFilter">
+  <option value="All">All Leagues</option>
+  <option value="Premier League">Premier League</option>
+  <option value="La Liga">La Liga</option>
+  <option value="Serie A">Serie A</option>
+  <option value="Bundesliga">Bundesliga</option>
+  <option value="Ligue 1">Ligue 1</option>
+<script>
+  const tableBody = document.getElementById("playerTable");
+  const searchInput = document.getElementById("search");
+  const leagueFilter = document.getElementById("leagueFilter");
+  const countText = document.getElementById("count");
 
-</body>
-</html>
+  const allPlayers = [
+    ...window.premierLeaguePlayers,
+    ...window.laLigaPlayers,
+    ...window.serieAPlayers,
+    ...window.bundesligaPlayers,
+    ...window.ligue1Players
+  ];
+
+  function renderTable(players) {
+    tableBody.innerHTML = "";
+    players.forEach(p => {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.team}</td>
+          <td>${p.position}</td>
+          <td>${p.age}</td>
+        </tr>
+      `;
+    });
+
+    countText.innerText = `Total players: ${players.length}`;
+  }
+
+  function applyFilters() {
+    const keyword = searchInput.value.toLowerCase();
+    const league = leagueFilter.value;
+
+    const filtered = allPlayers.filter(p => {
+      const matchName = p.name.toLowerCase().includes(keyword);
+      const matchLeague = league === "All" || p.league === league;
+      return matchName && matchLeague;
+    });
+
+    renderTable(filtered);
+  }
+
+  searchInput.addEventListener("input", applyFilters);
+  leagueFilter.addEventListener("change", applyFilters);
+
+  renderTable(allPlayers);
+</script>
