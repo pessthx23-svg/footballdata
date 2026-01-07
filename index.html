@@ -5,17 +5,6 @@
   <title>Football Players Database</title>
 
   <style>
-    select {
-  padding: 10px;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-.controls {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
@@ -26,11 +15,15 @@
       text-align: center;
     }
 
-    input {
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select {
       padding: 10px;
-      width: 300px;
-      margin-bottom: 15px;
       font-size: 16px;
+      margin: 5px;
     }
 
     table {
@@ -58,10 +51,9 @@
 <body>
 
 <h1>Football Players Database</h1>
-  
 <p id="count" style="text-align:center; font-weight:bold;"></p>
 
-  <div class="controls">
+<div class="controls">
   <input type="text" id="search" placeholder="Search player name..." />
 
   <select id="leagueFilter">
@@ -73,7 +65,6 @@
     <option value="Ligue 1">Ligue 1</option>
   </select>
 </div>
-
 
 <table>
   <thead>
@@ -98,46 +89,6 @@
 <script>
   const tableBody = document.getElementById("playerTable");
   const searchInput = document.getElementById("search");
-
-  // ✅ รวมข้อมูลทุกลีก
-  const allPlayers = [
-    ...(window.premierLeaguePlayers || []),
-    ...(window.laLigaPlayers || []),
-    ...(window.serieAPlayers || []),
-    ...(window.bundesligaPlayers || []),
-    ...(window.ligue1Players || [])
-  ];
-
-  function renderTable(players) {
-    tableBody.innerHTML = "";
-    players.forEach(p => {
-      tableBody.innerHTML += `
-        <tr>
-          <td>${p.name}</td>
-          <td>${p.team}</td>
-          <td>${p.position}</td>
-          <td>${p.age}</td>
-          <td>${p.league}</td>
-        </tr>
-      `;
-    });
-  }
-
-  // แสดงทั้งหมดตอนเปิดเว็บ
-  renderTable(allPlayers);
-
-  // ค้นหา
-  searchInput.addEventListener("input", () => {
-    <select id="leagueFilter">
-  <option value="All">All Leagues</option>
-  <option value="Premier League">Premier League</option>
-  <option value="La Liga">La Liga</option>
-  <option value="Serie A">Serie A</option>
-  <option value="Bundesliga">Bundesliga</option>
-  <option value="Ligue 1">Ligue 1</option>
-<script>
-  const tableBody = document.getElementById("playerTable");
-  const searchInput = document.getElementById("search");
   const leagueFilter = document.getElementById("leagueFilter");
   const countText = document.getElementById("count");
 
@@ -158,6 +109,7 @@
           <td>${p.team}</td>
           <td>${p.position}</td>
           <td>${p.age}</td>
+          <td>${p.league}</td>
         </tr>
       `;
     });
@@ -183,3 +135,6 @@
 
   renderTable(allPlayers);
 </script>
+
+</body>
+</html>
