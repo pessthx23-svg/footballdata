@@ -1,115 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Football Players Database</title>
+<meta charset="UTF-8">
+<title>Football Players Database</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    input {
-      padding: 10px;
-      width: 300px;
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-    }
-
-    th {
-      background: #222;
-      color: #fff;
-    }
-
-    tr:nth-child(even) {
-      background: #f2f2f2;
-    }
-  </style>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+}
+select, input {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+th {
+  background: #222;
+  color: white;
+}
+tr:nth-child(even) {
+  background: #f2f2f2;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>Football Players Database</h1>
+<h1>Football Players Database</h1>
 
-  <input type="text" id="search" placeholder="Search player name...">
+<select id="leagueSelect">
+  <option value="all">All Leagues</option>
+  <option value="Premier League">Premier League</option>
+  <option value="La Liga">La Liga</option>
+  <option value="Bundesliga">Bundesliga</option>
+  <option value="Serie A">Serie A</option>
+  <option value="Ligue 1">Ligue 1</option>
+</select>
 
-  <table>
-    <thead>
+<input type="text" id="search" placeholder="Search player name..." />
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Team</th>
+  <th>Position</th>
+  <th>Age</th>
+  <th>League</th>
+</tr>
+</thead>
+<tbody id="playerTable"></tbody>
+</table>
+
+<!-- โหลดข้อมูล -->
+<script src="data/premier-league.js"></script>
+<script src="data/la-liga.js"></script>
+<script src="data/bundesliga.js"></script>
+<script src="data/serie-a.js"></script>
+<script src="data/ligue-1.js"></script>
+
+<script>
+const allPlayers = [
+  ...window.premierLeaguePlayers,
+  ...window.laLigaPlayers,
+  ...window.bundesligaPlayers,
+  ...window.serieAPlayers,
+  ...window.ligue1Players
+];
+
+const tableBody = document.getElementById("playerTable");
+const searchInput = document.getElementById("search");
+const leagueSelect = document.getElementById("leagueSelect");
+
+function render(players) {
+  tableBody.innerHTML = "";
+  players.forEach(p => {
+    tableBody.innerHTML += `
       <tr>
-        <th>Name</th>
-        <th>Team</th>
-        <th>League</th>
-        <th>Position</th>
-        <th>Age</th>
+        <td>${p.name}</td>
+        <td>${p.team}</td>
+        <td>${p.position}</td>
+        <td>${p.age}</td>
+        <td>${p.league}</td>
       </tr>
-    </thead>
-    <tbody id="playerTable"></tbody>
-  </table>
+    `;
+  });
+}
 
-  <!-- โหลดข้อมูล 5 ลีก -->
-  <script src="data/premier-league.js"></script>
-  <script src="data/la-liga.js"></script>
-  <script src="data/serie-a.js"></script>
-  <script src="data/bundesliga.js"></script>
-  <script src="data/ligue-1.js"></script>
+function filterPlayers() {
+  const keyword = searchInput.value.toLowerCase();
+  const league = leagueSelect.value;
 
-  <script>
-    const tableBody = document.getElementById("playerTable");
-    const searchInput = document.getElementById("search");
+  let filtered = allPlayers.filter(p =>
+    p.name.toLowerCase().includes(keyword)
+  );
 
-    // ✅ รวมทุกลีก
-    const allPlayers = [
-      ...window.premierLeaguePlayers,
-      ...window.laLigaPlayers,
-      ...window.serieAPlayers,
-      ...window.bundesligaPlayers,
-      ...window.ligue1Players
-    ];
+  if (league !== "all") {
+    filtered = filtered.filter(p => p.league === league);
+  }
 
-    function renderTable(players) {
-      tableBody.innerHTML = "";
-      players.forEach(p => {
-        tableBody.innerHTML += `
-          <tr>
-            <td>${p.name}</td>
-            <td>${p.team}</td>
-            <td>${p.league}</td>
-            <td>${p.position}</td>
-            <td>${p.age}</td>
-          </tr>
-        `;
-      });
-    }
+  render(filtered);
+}
 
-    // โหลดครั้งแรก
-    renderTable(allPlayers);
+searchInput.addEventListener("input", filterPlayers);
+leagueSelect.addEventListener("change", filterPlayers);
 
-    // ค้นหา
-    searchInput.addEventListener("input", () => {
-      const keyword = searchInput.value.toLowerCase();
-      const filtered = allPlayers.filter(p =>
-        p.name.toLowerCase().includes(keyword)
-      );
-      renderTable(filtered);
-    });
-  </script>
+// แสดงทั้งหมดตอนแรก
+render(allPlayers);
+</script>
 
 </body>
 </html>
