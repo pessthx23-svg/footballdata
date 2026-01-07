@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Football Data</title>
+  <title>Football Players</title>
 </head>
 <body>
 
@@ -10,22 +10,17 @@
 
   <div id="output"></div>
 
-  <!-- โหลดข้อมูล Premier League -->
+  <!-- โหลดข้อมูล -->
   <script src="data/premier-league.js"></script>
 
-  <!-- แสดงผลข้อมูล -->
   <script>
     const output = document.getElementById("output");
 
-    if (window.premierLeaguePlayers) {
-      window.premierLeaguePlayers.forEach(player => {
-        const p = document.createElement("p");
-        p.textContent = `${player.name} - ${player.team} (${player.position})`;
-        output.appendChild(p);
-      });
-    } else {
-      output.textContent = "No data loaded ❌";
-    }
+    premierLeaguePlayers.forEach(player => {
+      const p = document.createElement("p");
+      p.textContent = `${player.name} - ${player.team} (${player.position})`;
+      output.appendChild(p);
+    });
   </script>
 
 </body>
