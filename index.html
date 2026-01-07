@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <title>Football Players Database</title>
 
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', Arial, sans-serif;
       background: #f4f6f8;
       padding: 20px;
     }
@@ -45,6 +48,23 @@
 
     tr:nth-child(even) {
       background: #f2f2f2;
+    }
+
+    /* 🎨 League colors */
+    .league-Premier\ League { border-left: 6px solid #3f1052; }
+    .league-La\ Liga { border-left: 6px solid #ee8707; }
+    .league-Serie\ A { border-left: 6px solid #0057b8; }
+    .league-Bundesliga { border-left: 6px solid #d20515; }
+    .league-Ligue\ 1 { border-left: 6px solid #091c3e; }
+
+    /* ⭐ Star players */
+    .star {
+      background: linear-gradient(90deg, #fff3cd, #ffffff);
+      font-weight: 700;
+    }
+
+    .star td:first-child::before {
+      content: "⭐ ";
     }
   </style>
 </head>
@@ -92,19 +112,35 @@
   const leagueFilter = document.getElementById("leagueFilter");
   const countText = document.getElementById("count");
 
+  // ⭐ นักเตะดัง
+  const starPlayers = [
+    "Erling Haaland",
+    "Kylian Mbappé",
+    "Lionel Messi",
+    "Cristiano Ronaldo",
+    "Kevin De Bruyne",
+    "Mohamed Salah",
+    "Harry Kane",
+    "Jude Bellingham"
+  ];
+
+  // รวมข้อมูลทั้งหมด
   const allPlayers = [
-    ...window.premierLeaguePlayers,
-    ...window.laLigaPlayers,
-    ...window.serieAPlayers,
-    ...window.bundesligaPlayers,
-    ...window.ligue1Players
+    ...(window.premierLeaguePlayers || []),
+    ...(window.laLigaPlayers || []),
+    ...(window.serieAPlayers || []),
+    ...(window.bundesligaPlayers || []),
+    ...(window.ligue1Players || [])
   ];
 
   function renderTable(players) {
     tableBody.innerHTML = "";
+
     players.forEach(p => {
+      const isStar = starPlayers.includes(p.name);
+
       tableBody.innerHTML += `
-        <tr>
+        <tr class="league-${p.league.replace(" ", "\\ ")} ${isStar ? "star" : ""}">
           <td>${p.name}</td>
           <td>${p.team}</td>
           <td>${p.position}</td>
