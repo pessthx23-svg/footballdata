@@ -1,27 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Football Players</title>
+  <meta charset="UTF-8" />
+  <title>Football Players Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin: 20px auto;
+      display: block;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #222;
+      color: white;
+    }
+
+    tr:hover {
+      background: #f1f1f1;
+    }
+
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Football Players ✅</h1>
+  <h1>Premier League Players</h1>
 
-  <div id="output"></div>
+  <input
+    type="text"
+    id="search"
+    placeholder="Search player name..."
+  />
 
-  <!-- โหลดข้อมูล -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody id="playerTable"></tbody>
+  </table>
+
+  <!-- โหลดข้อมูลจากไฟล์ JS -->
   <script src="data/premier-league.js"></script>
 
   <script>
-    const output = document.getElementById("output");
+    const tableBody = document.getElementById("playerTable");
+    const searchInput = document.getElementById("search");
 
-    premierLeaguePlayers.forEach(player => {
-      const p = document.createElement("p");
-      p.textContent = `${player.name} - ${player.team} (${player.position})`;
-      output.appendChild(p);
+    function renderTable(players) {
+      tableBody.innerHTML = "";
+      players.forEach(player => {
+        const row = `
+          <tr>
+            <td>${player.name}</td>
+            <td>${player.team}</td>
+            <td>${player.position}</td>
+            <td>${player.age}</td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // แสดงทั้งหมดตอนแรก
+    renderTable(window.premierLeaguePlayers);
+
+    // ค้นหาชื่อ
+    searchInput.addEventListener("input", () => {
+      const keyword = searchInput.value.toLowerCase();
+      const filtered = window.premierLeaguePlayers.filter(p =>
+        p.name.toLowerCase().includes(keyword)
+      );
+      renderTable(filtered);
     });
   </script>
 
 </body>
 </html>
+
