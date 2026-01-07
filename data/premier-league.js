@@ -1,4 +1,4 @@
-const premierLeague = [
+window.premierLeague = [
   // Manchester City
   { name:"Erling Haaland", league:"Premier League", team:"Manchester City", position:"Forward", age:24, height:"195 cm", weight:"88 kg" },
   { name:"Kevin De Bruyne", league:"Premier League", team:"Manchester City", position:"Midfielder", age:33, height:"181 cm", weight:"70 kg" },
