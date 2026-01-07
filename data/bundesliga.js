@@ -1,4 +1,5 @@
-const bundesliga = [
+window.bundesligaPlayers = [
+
   // Bayern Munich
   { name:"Harry Kane", league:"Bundesliga", team:"Bayern Munich", position:"Forward", age:31, height:"188 cm", weight:"86 kg" },
   { name:"Jamal Musiala", league:"Bundesliga", team:"Bayern Munich", position:"Attacking Midfielder", age:22, height:"184 cm", weight:"72 kg" },
