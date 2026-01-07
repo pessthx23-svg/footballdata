@@ -57,17 +57,31 @@
       <th>Team</th>
       <th>Position</th>
       <th>Age</th>
+      <th>League</th>
     </tr>
   </thead>
   <tbody id="playerTable"></tbody>
 </table>
 
-<!-- โหลดข้อมูล -->
+<!-- โหลดข้อมูลทุกลีก -->
 <script src="data/premier-league.js"></script>
+<script src="data/la-liga.js"></script>
+<script src="data/serie-a.js"></script>
+<script src="data/bundesliga.js"></script>
+<script src="data/ligue-1.js"></script>
 
 <script>
   const tableBody = document.getElementById("playerTable");
   const searchInput = document.getElementById("search");
+
+  // ✅ รวมข้อมูลทุกลีก
+  const allPlayers = [
+    ...(window.premierLeaguePlayers || []),
+    ...(window.laLigaPlayers || []),
+    ...(window.serieAPlayers || []),
+    ...(window.bundesligaPlayers || []),
+    ...(window.ligue1Players || [])
+  ];
 
   function renderTable(players) {
     tableBody.innerHTML = "";
@@ -78,18 +92,19 @@
           <td>${p.team}</td>
           <td>${p.position}</td>
           <td>${p.age}</td>
+          <td>${p.league}</td>
         </tr>
       `;
     });
   }
 
-  // แสดงข้อมูลเริ่มต้น
-  renderTable(window.premierLeaguePlayers);
+  // แสดงทั้งหมดตอนเปิดเว็บ
+  renderTable(allPlayers);
 
   // ค้นหา
   searchInput.addEventListener("input", () => {
     const keyword = searchInput.value.toLowerCase();
-    const filtered = window.premierLeaguePlayers.filter(p =>
+    const filtered = allPlayers.filter(p =>
       p.name.toLowerCase().includes(keyword)
     );
     renderTable(filtered);
