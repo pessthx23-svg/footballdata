@@ -1,4 +1,4 @@
-const serieA = [
+window.serieA = [
   // Inter Milan
   { name:"Lautaro Martínez", league:"Serie A", team:"Inter Milan", position:"Forward", age:27, height:"174 cm", weight:"72 kg" },
   { name:"Marcus Thuram", league:"Serie A", team:"Inter Milan", position:"Forward", age:27, height:"192 cm", weight:"90 kg" },
